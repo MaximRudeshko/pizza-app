@@ -1,11 +1,13 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types'
 
 const SortPopup = memo(({items, onSortTypeSelect, activeSortType}) => {
-
+    console.log(activeSortType)
     const [visiblePopup, setVisiblePopup] = useState(false);
-    const activeLabel = items.find(obj => obj.type === activeSortType).name
+    const activeLabel = items.find(obj => obj.type === activeSortType.type).name
     const sortRef = useRef();
+    console.log(items)
+    window.items = items
 
     
 
@@ -19,6 +21,11 @@ const SortPopup = memo(({items, onSortTypeSelect, activeSortType}) => {
         }
     }
 
+    
+    const sortTypeClickHandler = (type) => {
+        onSortTypeSelect(type);
+        toggleVisiblePopup()
+    }
 
     useEffect(() => {
         document.body.addEventListener('click', outsideClickHandler)
@@ -48,10 +55,11 @@ const SortPopup = memo(({items, onSortTypeSelect, activeSortType}) => {
                     <ul>
                         {items && 
                             items.map((item, index) => {
+                                
                                 return (
                                     <li
-                                        onClick = {() => onSortTypeSelect(item.type)}
-                                        className = {activeSortType === item.type ? 'active' : ''}
+                                        onClick = {() => sortTypeClickHandler(item)}
+                                        className = {activeSortType.type === item.type ? 'active' : ''}
                                         key = {`${item.name}_${index}`}
                                     >{item.name}</li>
                                 )

@@ -1,7 +1,11 @@
-export const setSortBy = (sortBy) => {
+export const setSortBy = ({type, order,name}) => {
     return {
         type: 'SET_SORT_BY',
-        payload: sortBy
+        payload: {
+            name,
+            type,
+            order
+        }
     }
 }
 

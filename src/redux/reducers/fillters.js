@@ -1,6 +1,9 @@
 const initialState = {
-    sortBy: 'popular',
-    category: 0
+    sortBy: {
+        type: 'rating',
+        order: 'asc'
+    },
+    category: null
 }
 
 const fillterReducer = (state = initialState, action) => {

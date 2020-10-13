@@ -5,6 +5,12 @@ const Categories = memo(({items, activeCategory, onCategorySelect}) => {
     return (
         <div className="categories">
               <ul>
+                <li 
+                    className = {activeCategory === null ? 'active': ''}
+                    onClick = {() => onCategorySelect(null)}
+                >
+                    Все
+                </li>
                 {items &&
                     items.map((name, index) => {
                         return (

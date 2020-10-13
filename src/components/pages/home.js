@@ -10,11 +10,11 @@ import {SortPopup} from '../sort-popup'
 import MyLoader from '../content-loader/content-loader';
 
 
-const categoryNames = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']
+const categoryNames = [ 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']
 const sortNames = [
-    {name:'популярности', type: 'popular'},
-    {name:'цене', type: 'price'},
-    {name:'алфавиту', type: 'alphabet'}
+    {name:'популярности', type: 'rating', order: 'desc'},
+    {name:'цене', type: 'price', order: 'asc'},
+    {name:'алфавиту', type: 'name', order: 'asc'}
 ]
 
 const Home = () => {
@@ -31,9 +31,11 @@ const Home = () => {
       dispatch(setSortBy(sortType))
   },[])
 
+  console.log(activeSortType)
+
   useEffect(() => {
-    dispatch(fetchPizzas())
-  }, [activeCategory])
+    dispatch(fetchPizzas(activeCategory, activeSortType))
+  }, [activeCategory, activeSortType])
 
     const items = useSelector(({pizzas}) => pizzas.pizzas)
     const isLoading = useSelector(({pizzas}) => pizzas.isLoading)
@@ -48,7 +50,7 @@ const Home = () => {
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
             {isLoading ? 
-              Array(10).fill(null).map( ( _ , index) => <MyLoader key = {index}/>)
+              Array(10).fill(null).map( ( _ , index) => <MyLoader key = {index} className = 'pizza-block'/>)
               : items.map(item => {
                   return <PizzaBlock key = {item.id} {...item} />
                 }) 
