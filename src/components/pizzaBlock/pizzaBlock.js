@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types'
 import MyLoader from '../content-loader/content-loader';
+import { addItemToCart } from '../../redux/actions/cart';
 
-const PizzaBlock = ({imageUrl, name, types, sizes, price, isLoading}) => {
+const PizzaBlock = ({imageUrl, name, types, sizes, price, isLoading, onAddItem, id}) => {
     const typesNames = ['тонкое', 'традиционное'];
     const avaibleSizes = [26, 30, 40]
 
@@ -17,6 +18,20 @@ const PizzaBlock = ({imageUrl, name, types, sizes, price, isLoading}) => {
     const onSizeSelect = (index) => {
         setActiveSize(index)
     }
+
+    const addClickHandler = () => {
+        const obj = {
+            imageUrl,
+            name,
+            id,
+            size: activeSize,
+            type: typesNames[activeType]
+        }
+
+        onAddItem(obj)
+    }
+
+    
 
     if(isLoading){
         return <MyLoader/>
@@ -65,7 +80,7 @@ const PizzaBlock = ({imageUrl, name, types, sizes, price, isLoading}) => {
                   <li>40 см.</li> */}
                 </ul>
             </div>
-            <div className="pizza-block__bottom">
+            <div onClick = {addClickHandler} className="pizza-block__bottom">
                 <div className="pizza-block__price">от {price} ₽</div>
                 <div className="button button--outline button--add">
                   <svg

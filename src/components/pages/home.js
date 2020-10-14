@@ -8,6 +8,7 @@ import {Categories} from '../categories'
 import {PizzaBlock} from '../pizzaBlock';
 import {SortPopup} from '../sort-popup'
 import MyLoader from '../content-loader/content-loader';
+import { addItemToCart } from '../../redux/actions/cart';
 
 
 const categoryNames = [ 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']
@@ -31,7 +32,9 @@ const Home = () => {
       dispatch(setSortBy(sortType))
   },[])
 
-  console.log(activeSortType)
+  const onAddItem = (obj) => {
+    dispatch(addItemToCart(obj))
+  }
 
   useEffect(() => {
     dispatch(fetchPizzas(activeCategory, activeSortType))
@@ -52,7 +55,7 @@ const Home = () => {
             {isLoading ? 
               Array(10).fill(null).map( ( _ , index) => <MyLoader key = {index} className = 'pizza-block'/>)
               : items.map(item => {
-                  return <PizzaBlock key = {item.id} {...item} />
+                  return <PizzaBlock key = {item.id} {...item} onAddItem = {onAddItem} />
                 }) 
                 
             }

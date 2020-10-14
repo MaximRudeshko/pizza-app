@@ -1,15 +1,10 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types'
 
 const SortPopup = memo(({items, onSortTypeSelect, activeSortType}) => {
-    console.log(activeSortType)
     const [visiblePopup, setVisiblePopup] = useState(false);
     const activeLabel = items.find(obj => obj.type === activeSortType.type).name
     const sortRef = useRef();
-    console.log(items)
-    window.items = items
-
-    
 
     const toggleVisiblePopup = () => {
         setVisiblePopup(!visiblePopup)
@@ -21,7 +16,6 @@ const SortPopup = memo(({items, onSortTypeSelect, activeSortType}) => {
         }
     }
 
-    
     const sortTypeClickHandler = (type) => {
         onSortTypeSelect(type);
         toggleVisiblePopup()
@@ -76,7 +70,7 @@ const SortPopup = memo(({items, onSortTypeSelect, activeSortType}) => {
 SortPopup.propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
     onSortTypeSelect: PropTypes.func,
-    activeSortType: PropTypes.string
+    activeSortType: PropTypes.object
 }
 
 SortPopup.defaultProps = {
