@@ -8,10 +8,7 @@ import { HeaderBtn } from '../header-btn'
 
 
 const Header = () => {
-
-
     const {totalItems, totalPrice} = useSelector(({cart}) => cart)
-
 
     return (
         <div className="header">

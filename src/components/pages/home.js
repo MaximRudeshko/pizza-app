@@ -1,9 +1,9 @@
 import React, {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react' 
+
 import {fetchPizzas} from '../../redux/actions/pizzas';
 import {setCategory, setSortBy} from '../../redux/actions/fillters'
-
 import {Categories} from '../categories'
 import {PizzaBlock} from '../pizzaBlock';
 import {SortPopup} from '../sort-popup'
@@ -41,7 +41,9 @@ const Home = () => {
   }, [activeCategory, activeSortType])
 
     const items = useSelector(({pizzas}) => pizzas.pizzas)
+    const cartItems = useSelector(({cart}) => cart.items)
     const isLoading = useSelector(({pizzas}) => pizzas.isLoading)
+
 
     return (
         <div className="content">
@@ -55,7 +57,7 @@ const Home = () => {
             {isLoading ? 
               Array(10).fill(null).map( ( _ , index) => <MyLoader key = {index} className = 'pizza-block'/>)
               : items.map(item => {
-                  return <PizzaBlock key = {item.id} {...item} onAddItem = {onAddItem} />
+                  return <PizzaBlock key = {item.id} {...item} onAddItem = {onAddItem} pizzaCount={cartItems[item.id] && cartItems[item.id].items.length} />
                 }) 
                 
             }

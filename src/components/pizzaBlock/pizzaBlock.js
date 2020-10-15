@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types'
 import MyLoader from '../content-loader/content-loader';
-import { addItemToCart } from '../../redux/actions/cart';
 
-const PizzaBlock = ({imageUrl, name, types, sizes, price, isLoading, onAddItem, id}) => {
+const PizzaBlock = ({imageUrl, name, types, sizes, price, isLoading, onAddItem, id, pizzaCount}) => {
     const typesNames = ['тонкое', 'традиционное'];
     const avaibleSizes = [26, 30, 40]
+
 
     const [activeType, setActiveType] = useState(types[0])
     const [activeSize, setActiveSize] = useState(sizes[0])
@@ -24,6 +24,7 @@ const PizzaBlock = ({imageUrl, name, types, sizes, price, isLoading, onAddItem, 
             imageUrl,
             name,
             id,
+            price,
             size: activeSize,
             type: typesNames[activeType]
         }
@@ -96,7 +97,7 @@ const PizzaBlock = ({imageUrl, name, types, sizes, price, isLoading, onAddItem, 
                     />
                   </svg>
                   <span>Добавить</span>
-                  <i>2</i>
+                  {pizzaCount && <i>{pizzaCount}</i>}
                 </div>
             </div>
         </div>
@@ -108,7 +109,11 @@ PizzaBlock.propTypes = {
     name: PropTypes.string,
     types: PropTypes.arrayOf(PropTypes.number),
     sizes: PropTypes.arrayOf(PropTypes.number),
-    price: PropTypes.number
+    price: PropTypes.number,
+    isLoading: PropTypes.bool,
+    onAddItem: PropTypes.func,
+    pizzaCount: PropTypes.number
 }
+
 
 export default PizzaBlock;
